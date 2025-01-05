@@ -14,8 +14,54 @@ This repository provides a Python-based tool to convert Spotify playlists into Y
 1. **Spotify API Credentials**  
    You need to have the following credentials:
    - `SPOTIFY_CLIENT_ID`: Your Spotify API client ID.
-   - `SPOTIFY_CLIENT_SECRET`: Your Spotify API client secret.
-   
+   - `SPOTIFY_CLIENT_SECRET`: Your Spotify API client secret. 
+   - To get your own Spotify API Key, [Spotify Developer Dashboard](https://developer.spotify.com/dashboard), press the 'Create app' button, and you'll find the required credentials.
+
+
 2. **Python Environment**  
    - Install Python 3.6+.
    - Install required libraries using `pip install -r requirements.txt`.
+
+## **Usage**
+   - Once the program finishes running, a `cache` folder will be created in the project directory root. 
+   - Navigate to the end of the `.json` file corresponding to the Spotify ID. 
+   - You will find the batch YouTube Music URLs listed there.
+### Example:
+When using the tool and providing a Spotify URL or ID such as:
+```https://open.spotify.com/playlist/37i9dQZF1DX6xOPeSOGone```
+
+A `1LTlRP0hzDdpsnTSevIaMz.json` file will be generated inside the `cache` folder.
+This file will contain all the songs from the Spotify Playlist, albeit in the corresponding YouTube Music URL format:
+```json
+    [
+    {
+        "name": "Long Train Runnin'",
+        "artist": "The Doobie Brothers",
+        "YoutubeURL": "https://music.youtube.com/watch?v=m4tJSn0QtME"
+    },
+    {
+        "name": "5-7-0-5",
+        "artist": "City Boy",
+        "YoutubeURL": "https://music.youtube.com/watch?v=AHm3w-50Vwc"
+    },
+    {
+        "name": "More Than a Feeling",
+        "artist": "Boston",
+        "YoutubeURL": "https://music.youtube.com/watch?v=t4QK8RxCAwo"
+    },
+    {
+        "name": "China Grove",
+        "artist": "The Doobie Brothers",
+        "YoutubeURL": "https://music.youtube.com/watch?v=RX7iHsAIw9o"
+    },...
+```
+At the bottom of the JSON file, batch YouTube Music URLs for easy playlist import are added:
+```json
+...,
+    {
+        "0-48": "https://music.youtube.com/watch?v=m4tJSn0QtME&list=TLGGXM-hdX72TC8wNTAxMjAyNQ",
+        "49-62": "https://music.youtube.com/watch?v=55xQu9eIPIA&list=TLGGhfKmaUp1PQ0wNTAxMjAyNQ"
+    }
+]
+```
+Instead of saving each song manually, only 2 actions are required to import the entire batch of 49 songs into YouTube Music. Enter the URLs, press 'Save' and choose the YouTube Music playlist to add the songs into.
