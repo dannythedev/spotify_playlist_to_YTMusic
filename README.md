@@ -28,7 +28,7 @@ This repository provides a Python-based tool to convert Spotify playlists into Y
    - You will find the batch YouTube Music URLs listed there.
 ### Example:
 When using the tool and providing a Spotify URL or ID such as:
-```https://open.spotify.com/playlist/37i9dQZF1DX6xOPeSOGone```
+[https://open.spotify.com/playlist/1LTlRP0hzDdpsnTSevIaMz](https://open.spotify.com/playlist/1LTlRP0hzDdpsnTSevIaMz)
 
 A `1LTlRP0hzDdpsnTSevIaMz.json` file will be generated inside the `cache` folder.
 This file will contain all the songs from the Spotify Playlist, albeit in the corresponding YouTube Music URL format:
@@ -53,15 +53,16 @@ This file will contain all the songs from the Spotify Playlist, albeit in the co
         "name": "China Grove",
         "artist": "The Doobie Brothers",
         "YoutubeURL": "https://music.youtube.com/watch?v=RX7iHsAIw9o"
-    },...
+    },
 ```
 At the bottom of the JSON file, batch YouTube Music URLs for easy playlist import are added:
 ```json
-...,
     {
         "0-48": "https://music.youtube.com/watch?v=m4tJSn0QtME&list=TLGGXM-hdX72TC8wNTAxMjAyNQ",
         "49-62": "https://music.youtube.com/watch?v=55xQu9eIPIA&list=TLGGhfKmaUp1PQ0wNTAxMjAyNQ"
     }
-]
 ```
-Instead of saving each song manually, only 2 actions are required to import the entire batch of 49 songs into YouTube Music. Enter the URLs, press 'Save' and choose the YouTube Music playlist to add the songs into.
+Instead of saving each song manually (63 songs), only (63//49) 2 actions are required to import the entire batch of 49 songs into YouTube Music.
+
+Open the URLs in your browser, press ![youtube_save_Button](https://github.com/user-attachments/assets/56308220-4536-4ba1-b5c1-4c8c81bc177e) once to batch-save 49 songs, and then select the YouTube Music playlist of your choice!
+
