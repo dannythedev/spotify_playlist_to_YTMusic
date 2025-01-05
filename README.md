@@ -62,7 +62,7 @@ At the bottom of the JSON file, batch YouTube Music URLs for easy playlist impor
         "49-62": "https://music.youtube.com/watch?v=55xQu9eIPIA&list=TLGGhfKmaUp1PQ0wNTAxMjAyNQ"
     }
 ```
-Instead of saving each song manually (63 songs), only (63//49) 2 actions are required to import the entire playlist into YouTube Music.
+Instead of saving each song manually (63 songs), only `(63//49)+1=` 2 actions are required to import the entire playlist into YouTube Music.
 
 Open the URLs in your browser, press ![youtube_save_Button](https://github.com/user-attachments/assets/56308220-4536-4ba1-b5c1-4c8c81bc177e) once to batch-save 49 songs, and then select the YouTube Music playlist of your choice!
 
