@@ -2,20 +2,40 @@ import json
 import os
 import re
 import requests
-from pytube import Search
+from ytmusicapi import YTMusic
+from Functions import calculate_tfidf_similarity
 
 PLAYLIST_LINK = 'https://www.youtube.com/watch_videos?video_ids={video_ids}'
 
 class YouTubeMusicFetcher:
     def __init__(self, playlist_json):
         self.playlist_json = playlist_json
+        self.ytmusic = YTMusic()
+        self.THRESHOLD = 70
 
     def get_youtube_music_url(self, song, artist):
         query = f"{song} {artist}"
-        search_results = Search(query).results
+        search_results = self.ytmusic.search(query)
         if search_results:
-            video_id = search_results[0].video_id
-            return f"https://music.youtube.com/watch?v={video_id}"
+            filtered_results = []
+            for vid in search_results:
+                if vid.get('videoType') == 'MUSIC_VIDEO_TYPE_ATV':
+                    vid['title_similarity'] = calculate_tfidf_similarity(vid.get('title', '').lower(), song.lower())
+                    if vid.get('artists'):
+                        vid['artist_similarity'] = calculate_tfidf_similarity(vid['artists'][0].get('name', '').lower(),
+                                                                       artist.lower())
+                        vid['total_similarity'] = vid['artist_similarity'] + vid['title_similarity']
+                        filtered_results.append(vid)
+
+            filtered_results = [vid for vid in filtered_results if vid['total_similarity'] >= self.THRESHOLD]
+            filtered_results.sort(key=lambda x: x['total_similarity'], reverse=True)
+
+            if filtered_results:
+                video_id = filtered_results[0].get('videoId')
+            else:
+                video_id = [vid['videoId'] for vid in search_results if 'videoId' in vid][0]
+            if video_id:
+                return f"https://music.youtube.com/watch?v={video_id}"
         return None
 
 
@@ -23,6 +43,7 @@ class PlaylistManager:
     def __init__(self, playlist_json):
         self.playlist_json = playlist_json
         self.songs = self.load_songs()
+        self.counter = 0
 
     def load_songs(self):
         with open(self.playlist_json, 'r') as file:
@@ -36,6 +57,7 @@ class PlaylistManager:
             if "YoutubeURL" not in song_info:  # Add YoutubeURL if it doesn't exist
                 url = fetcher.get_youtube_music_url(song, artist)
                 if url:
+                    self.counter += 1
                     song_info["YoutubeURL"] = url  # Update the URL directly
                     print(f"{song} by {artist}: {song_info.get('YoutubeURL')}")
                 else:
@@ -60,7 +82,7 @@ class PlaylistManager:
                 total_songs = len(all_songs)
                 num_chunks = (total_songs + chunk_size - 1) // chunk_size  # Calculate total chunks
 
-                print(f'Songs number: {total_songs}.')
+                print(f'Successfully exported {self.counter}/{total_songs} songs.')
 
                 for i in range(num_chunks):
                     # Get the current chunk of songs

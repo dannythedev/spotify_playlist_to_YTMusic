@@ -50,6 +50,7 @@ class SpotifyAPI:
 
         tracks = [{'name': track['track']['name'], 'artist': track['track']['artists'][0]['name']} for track in
                   all_tracks]
+        tracks = list({tuple(sorted(d.items())): d for d in tracks}.values()) # Remove duplicates.
         self._dump_playlist_data(tracks)
         return tracks
 
