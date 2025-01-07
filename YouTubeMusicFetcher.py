@@ -62,6 +62,8 @@ class PlaylistManager:
                     print(f"{song} by {artist}: {song_info.get('YoutubeURL')}")
                 else:
                     song_info["YoutubeURL"] = "Not found"
+                    print(f"{song} by {artist}: Not found.")
+
 
             # Write the updated song back to the file after modification
             with open(self.playlist_json, 'r') as file:

@@ -9,7 +9,7 @@ spotify_client_secret = os.getenv("SPOTIFY_CLIENT_SECRET")
 
 spotify_playlist_id = input('Enter spotify playlist ID or URL:')
 if spotify_playlist_id.startswith('http'):
-    spotify_playlist_id = re.search(r'playlist/([^&]+)', spotify_playlist_id).group(1)
+    spotify_playlist_id = re.search(r"playlist/([a-zA-Z0-9]+)|playlist/([^?&]+)", spotify_playlist_id).group(1)
 
 PLAYLIST_JSON = 'cache/playlist_{playlist_id}.json'.format(playlist_id=spotify_playlist_id)
 
